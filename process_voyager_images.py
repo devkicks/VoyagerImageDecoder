@@ -7,6 +7,8 @@ from PIL import Image
 # load data and invert signals
 in_wav_path = 'data/voyager_left_channel_32bitfloat_384kHz.wav'
 rate, data = scipy.io.wavfile.read(in_wav_path)
+
+# correct for waveforms
 data = -data
 
 # run things like TV playback - adds single line at a time
