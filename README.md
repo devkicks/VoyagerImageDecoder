@@ -57,11 +57,11 @@ Visualizing part of the signal and looking around time step 5999900, we can see 
 
 Comparing this with the first instructions given in the figure:
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/golden_disk_cover_waveform.jpg?raw=true" alt="golden_disk_cover_waveform.jpg" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/golden_disk_cover_waveform.jpg?raw=true" alt="golden_disk_cover_waveform.jpg" width="600"/>
 
  we can notice the data between a pair of impulse signals correspond to a single scan line in any given image:
  
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal_edited.png?raw=true" alt="initial_signal_edited.png" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal_edited.png?raw=true" alt="initial_signal_edited.png" width="600"/>
 
 Now to reconstruct the image, all we have to do it extract each scanline and place it into a matrix to get an image.
 
@@ -77,7 +77,7 @@ data = signal[i: i + window_size]
 plot(data)
 ```
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal.png?raw=true" alt="small_signal.png" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal.png?raw=true" alt="small_signal.png" width="600"/>
 <br><br>
 
 
@@ -90,7 +90,7 @@ data_deriv = np.abs(data-data_deriv)
 plot(data_deriv)
 ```
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_abs.png?raw=true" alt="small_signal_deriv_abs.png" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_abs.png?raw=true" alt="small_signal_deriv_abs.png" width="600"/>
 <br><br>
 
 As you can see, this results in multiple peaks in the area where we were expecting a single one. We can process the signal to remove any high frequencies by passing it through a low-pass filter:
@@ -102,7 +102,7 @@ data_deriv = (data_deriv>0.008).astype(np.int)
 check, indices = check_for_two_peaks(data_deriv)
 ```
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_filt.png?raw=true" alt="small_signal_deriv_filt.png" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_filt.png?raw=true" alt="small_signal_deriv_filt.png" width="600"/>
 <br><br>
 
 Finally, we can apply a simple threshold to get locations of the two peaks and use them for reading the relevant data at later steps:
@@ -113,7 +113,7 @@ plot(data_deriv)
 check, indices = check_for_two_peaks(data_deriv)
 ```
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_step.png?raw=true" alt="small_signal_deriv_step.png" width="400"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_step.png?raw=true" alt="small_signal_deriv_step.png" width="600"/>
 
 The final step is to write scanlines into an image plane. THis helps visualize image data as time-series, where at each time-step a new scan line is added. This is visualized as gif below:
 
