@@ -53,7 +53,7 @@ data = -data
 
 Visualizing part of the signal and looking around time step 5999900, we can see how the signal looks like and start comparing it with the ones provided as instructions to the aliens:
 
-<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal.png?raw=true" alt="golden_disk_cover_waveform.jpg" width="800"/>
+<img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal.png?raw=true" alt="golden_disk_cover_waveform.jpg" width="600"/>
 
 Comparing this with the first instructions given in the figure:
 
