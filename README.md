@@ -14,6 +14,7 @@ Famously know as the golden records due to the gold plating, the voyager records
 
 # Instructions for aliens
 As bizzare as it sounds, instructions were given to aliens in the form of a disk cover, showing in a very concise and descriptive way - the origins of the probe and what needed to be done to decode the images. In this post, I attempt to decode these images by observing the instructions as well as getting help from existing work on voyager golden disk image browser [^rf1]. 
+
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/golden_disk_cover.jpg?raw=true" alt="golden_disk_cover.jpg" width="400"/>
 
 
@@ -49,13 +50,15 @@ data = -data
 ```
 
 Visualizing part of the signal and looking around time step 5999900, we can see how the signal looks like and start comparing it with the ones provided as instructions to the aliens:
-![initial_signal.png]()
+
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal.png?raw=true" alt="golden_disk_cover_waveform.jpg" width="400"/>
 
 Comparing this with the first instructions given in the figure:
+
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/golden_disk_cover_waveform.jpg?raw=true" alt="golden_disk_cover_waveform.jpg" width="400"/>
 
  we can notice the data between a pair of impulse signals correspond to a single scan line in any given image:
+ 
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/initial_signal_edited.png?raw=true" alt="initial_signal_edited.png" width="400"/>
 
 Now to reconstruct the image, all we have to do it extract each scanline and place it into a matrix to get an image.
@@ -66,15 +69,18 @@ Looking at previous work at [^rf1] the major issue in reconstructing the images 
 Observing the signals above, we notice the main part before a signal starts and ends is an impulse peak signal. Using this observation, we can come up with a much more robust algorithm that is based on detecting these peaks and then identifying the signals in between as a single scan-line.
 
 We can look at the following section of the signal to demonstrate how a peak detection algorithm might work. 
+
 ```python
 data = signal[i: i + window_size]
 plot(data)
 ```
+
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal.png?raw=true" alt="small_signal.png" width="400"/>
 <br><br>
 
 
 To detect the peaks, the first thing we do is to take a derivative of the signal. As the signal is discrete, we can achieve this just by a shift and subtraction from original signal to get gradient at each time-point. We use absolute values so as we are only interested in where peaks exist and not whether they are positive or negative:
+
 ```python
 data_deriv = np.zeros_like(data)
 data_deriv[0:-2] = data[1:-1]
@@ -86,6 +92,7 @@ plot(data_deriv)
 <br><br>
 
 As you can see, this results in multiple peaks in the area where we were expecting a single one. We can process the signal to remove any high frequencies by passing it through a low-pass filter:
+
 ```python
 data_deriv = filter_signal(data_deriv, filter_size=21)
 plot(data_deriv)
@@ -97,6 +104,7 @@ check, indices = check_for_two_peaks(data_deriv)
 <br><br>
 
 Finally, we can apply a simple threshold to get locations of the two peaks and use them for reading the relevant data at later steps:
+
 ```python
 data_deriv = (data_deriv>0.008).astype(np.int)
 plot(data_deriv)
@@ -106,6 +114,7 @@ check, indices = check_for_two_peaks(data_deriv)
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/small_signal_deriv_step.png?raw=true" alt="small_signal_deriv_step.png" width="400"/>
 
 The final step is to write scanlines into an image plane. THis helps visualize image data as time-series, where at each time-step a new scan line is added. This is visualized as gif below:
+
 ![image](https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/imageGif.gif)
 
 ## Simple linear resize function
