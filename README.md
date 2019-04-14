@@ -20,6 +20,7 @@ As bizzare as it sounds, instructions were given to aliens in the form of a disk
 
 ## Clues for decoding images
 The first clue appears in the top right of the cover where you can see a waveform:
+
 <img src="https://github.com/devkicks/VoyagerImageDecoder/blob/master/images/golden_disk_cover_waveform.jpg?raw=true" alt="golden_disk_cover_waveform.jpg" width="400"/>
 
 As noted in [^rf1] the wave form appear to be sequentially written data with each complete waveform representing a time-series signal, while the whole signal is split into groups of multiple of these individual time-series signals. Notice the binary number below each peaks and valleys in the signal indicating that each one of them correspond to a value in the time-series, while the binary numbers above each waveform indicate that they are part of a bigger sequence. 
