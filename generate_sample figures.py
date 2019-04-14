@@ -39,7 +39,7 @@ if __name__=='__main__':
     plt.close('all')
     start_idx = 5999900 + 6350
     data1, data_deriv, data_deriv_abs, data_deriv_filt, data_deriv_step = \
-    find_peaks(data, start_idx, 4500*5)
+    find_peaks(data, start_idx, 4500*3)
     plot(data1, 'Time steps', 'Amplitude', 'images/initial_signal.png')
     
     start_idx = 5999900 + 6650
